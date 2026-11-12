@@ -1,0 +1,17 @@
+name: tests
+on:
+  push:
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  unit:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - name: Compile and run isolated tests
+        run: |
+          python3 -m py_compile uninstall_ioa.py
+          python3 -m unittest discover -s tests -v
+      - name: Check CLI help
+        run: python3 uninstall_ioa.py --help
